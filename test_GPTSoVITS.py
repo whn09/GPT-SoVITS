@@ -16,7 +16,7 @@ import wave
 import numpy as np
 import soundfile as sf
 
-from inference_webui import i18n, dict_language, cut1, cut2, cut3, cut4, cut5, process_text, get_tts_wav
+from inference_webui import i18n, dict_language, get_tts_wav
 
 
 def text_to_speech_pcm_stream(text, ref_audio_path, language=i18n("中文"), 
@@ -89,7 +89,7 @@ def text_to_speech_pcm_stream(text, ref_audio_path, language=i18n("中文"),
             with wave.open(wav_buffer, 'wb') as wav_file:
                 wav_file.setnchannels(1)  # 单声道
                 wav_file.setsampwidth(bit_depth // 8)
-                wav_file.setframerate(sample_rate)
+                wav_file.setframerate(sampling_rate)
                 wav_file.writeframes(audio_data.tobytes())
             
             # 返回WAV数据
@@ -233,8 +233,7 @@ def main():
         text_to_speech_pcm_stream(
             text="喂，你好！歡迎致電安樂貸款公司，我係Amy，請問有咩可以幫到你？(Hello, welcome to Peace of Mind Lending Company. This is Amy, how may I help you?)",
             ref_audio_path="ref.wav",
-            language=i18n("多语种混合(粤语)"),
-            sample_rate=32000
+            language=i18n("多语种混合(粤语)")
         ),
         "output.wav"
     )
